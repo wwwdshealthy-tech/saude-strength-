@@ -1,0 +1,329 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#101820">
+<title>Saude Strength V2</title>
+<style>
+:root{--bg:#0c1218;--panel:#151f28;--panel2:#1b2833;--line:#2c3c49;--text:#f2f6f8;--muted:#9eb0bc;--accent:#b6f36b;--accent2:#d7ff9f;--red:#ff7e79;--blue:#8bd4ff;--radius:18px}
+*{box-sizing:border-box}html{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}body{margin:0;padding:0 0 calc(88px + env(safe-area-inset-bottom));background:linear-gradient(180deg,#101820 0%,#0b1117 100%);min-height:100vh}
+header{padding:calc(16px + env(safe-area-inset-top)) 16px 14px;position:sticky;top:0;z-index:5;background:rgba(12,18,24,.94);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;justify-content:space-between;gap:10px}.brand h1{font-size:20px;letter-spacing:.3px;margin:0;font-weight:850}.brand h1 span{color:var(--accent)}.badge{font-size:10px;letter-spacing:1px;border:1px solid #58733a;color:var(--accent);padding:5px 8px;border-radius:99px;font-weight:800}
+.subhead{color:var(--muted);font-size:12px;margin-top:5px}
+main{max-width:900px;margin:0 auto;padding:16px}
+nav{position:fixed;bottom:0;left:0;right:0;z-index:10;display:grid;grid-template-columns:repeat(6,1fr);gap:2px;padding:8px 5px calc(8px + env(safe-area-inset-bottom));background:rgba(13,20,27,.97);border-top:1px solid var(--line);backdrop-filter:blur(12px)}
+nav button{border:0;background:none;color:var(--muted);font-size:10px;font-weight:700;padding:7px 2px;display:flex;flex-direction:column;align-items:center;gap:4px}
+nav button .ico{font-size:19px;line-height:1}nav button.active{color:var(--accent)}
+h2{font-size:22px;margin:4px 0 5px}h3{font-size:15px;margin:0 0 10px}p{line-height:1.45}.muted{color:var(--muted)}.small{font-size:12px}.tiny{font-size:10px;color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:14px;margin:0 0 12px;box-shadow:0 8px 24px rgba(0,0,0,.12)}
+.stat{padding:13px}.stat strong{font-size:24px;display:block;color:var(--accent);margin:4px 0}.stat span{font-size:11px;color:var(--muted)}
+.row{display:flex;align-items:center;justify-content:space-between;gap:10px}.row.wrap{flex-wrap:wrap}.row.start{align-items:flex-start}
+button,.btn{border:0;border-radius:12px;background:var(--accent);color:#17210e;padding:11px 14px;font-weight:800;font-size:13px;cursor:pointer}
+button.secondary,.btn.secondary{background:var(--panel2);border:1px solid var(--line);color:var(--text)}
+button.ghost{background:transparent;color:var(--accent);border:1px solid #536b39}
+button.danger{background:#4a2528;color:#ffd8d5;border:1px solid #7d4144}
+button:disabled{opacity:.45;cursor:not-allowed}
+input,select,textarea{width:100%;border:1px solid var(--line);border-radius:11px;background:#0d151c;color:var(--text);padding:11px;font:inherit;font-size:14px;min-width:0}
+input[type=number]{padding:9px 7px}label{display:block;color:var(--muted);font-size:11px;font-weight:700;margin-bottom:5px}
+.formgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.exercise{background:#101922;border:1px solid #293945;border-radius:14px;padding:12px;margin:9px 0}
+.exercise h4{margin:0 0 5px;font-size:14px}.exercise .tags{font-size:10px;color:var(--accent2);margin-bottom:7px}
+.exercise .note{font-size:11px;color:var(--muted);line-height:1.4;margin:0 0 9px}
+.pill{display:inline-block;padding:5px 8px;border-radius:99px;background:#26343e;color:#c7d4dc;font-size:10px;font-weight:700;margin:2px 3px 2px 0}
+.pill.green{background:#263b1c;color:var(--accent2)}.pill.blue{background:#173247;color:#a7dcff}
+.progress{height:8px;border-radius:99px;background:#26333d;overflow:hidden}.progress i{display:block;height:100%;background:var(--accent);border-radius:99px}
+.calendar{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px}.day{background:#101922;border:1px solid var(--line);border-radius:11px;text-align:center;padding:8px 2px;min-height:62px}.day b{display:block;font-size:11px}.day span{display:block;font-size:10px;color:var(--muted);margin-top:6px}.day.done{border-color:#698d43;background:#1b2b1a}.day.today{outline:1px solid var(--accent)}
+.listitem{padding:10px 0;border-bottom:1px solid var(--line)}.listitem:last-child{border:0}
+canvas{width:100%;height:210px;display:block;background:#0e171e;border:1px solid var(--line);border-radius:13px}
+.notice{border-left:3px solid var(--accent);background:#18251a;padding:11px 12px;border-radius:9px;color:#dbe9d0;font-size:12px;line-height:1.45;margin:10px 0}
+.warn{border-left-color:#e7b35a;background:#2a2418;color:#f4e3c2}
+.error{color:var(--red)}.success{color:var(--accent)}
+details{border-top:1px solid var(--line);padding:11px 0}summary{cursor:pointer;font-weight:750;font-size:13px}
+footer{text-align:center;color:#6f838f;font-size:10px;padding:16px}
+a{color:var(--accent2)}.empty{padding:22px 10px;text-align:center;color:var(--muted);font-size:13px}
+#timerDisplay{font-size:30px;font-weight:850;color:var(--accent);font-variant-numeric:tabular-nums}
+@media(min-width:700px){main{padding:22px}.grid{grid-template-columns:repeat(4,minmax(0,1fr))}nav{max-width:900px;left:50%;transform:translateX(-50%);border:1px solid var(--line);border-bottom:0;border-radius:18px 18px 0 0}header{padding-left:max(20px,calc((100vw - 860px)/2));padding-right:max(20px,calc((100vw - 860px)/2))}}
+@media(max-width:360px){.formgrid{grid-template-columns:repeat(3,minmax(0,1fr))}.formgrid input{font-size:12px}.stat strong{font-size:20px}nav button{font-size:9px}}
+</style>
+</head>
+<body>
+<header>
+ <div class="brand"><h1>SAUDE <span>STRENGTH</span></h1><span class="badge">VERSION 2</span></div>
+ <div class="subhead">Train with purpose. Track the work. Earn the progress.</div>
+</header>
+<main id="app"></main>
+<nav id="nav">
+ <button data-tab="home" class="active"><span class="ico">⌂</span>Home</button>
+ <button data-tab="train"><span class="ico">🏋️</span>Train</button>
+ <button data-tab="strength"><span class="ico">↗</span>Strength</button>
+ <button data-tab="body"><span class="ico">⚖</span>Body</button>
+ <button data-tab="coach"><span class="ico">✦</span>Coach</button>
+ <button data-tab="history"><span class="ico">▤</span>History</button>
+</nav>
+<script>
+"use strict";
+const KEYS={sessions:"saudeStrengthV2Sessions",measures:"saudeStrengthV2Measures",settings:"saudeStrengthV2Settings",overrides:"saudeStrengthV2Overrides",pending:"saudeStrengthV2Pending"};
+const LEGACY=["saudeStrengthLogs","saudeStrengthHistory","saudeStrengthDay"];
+const PROGRAM=[
+{id:1,name:"Push",type:"Strength / hypertrophy",duration:"65–70 min",focus:"Chest · shoulders · triceps · mid/lower traps",exercises:[
+["Smith bench press",4,"6–8","Chest","Controlled 2-second lower; keep shoulder blades set."],
+["Incline dumbbell press",3,"8–10","Chest","Use a comfortable incline; full controlled range."],
+["Smith shoulder press",3,"8–10","Shoulders","Brace ribs down; do not over-arch."],
+["Cable lateral raise",3,"12–15 + drop","Shoulders","Lead with elbows; stop before shrugging."],
+["Cable face pull",2,"15","Traps","Pull toward forehead; finish with shoulder blades moving naturally. Middle/lower trap and rear-delt emphasis."],
+["Cable fly",3,"10–15","Chest","Soft elbows; controlled stretch."],
+["Overhead cable triceps extension",3,"10–15","Triceps","Keep upper arms steady."],
+["Dips",2,"Near failure","Triceps","Stop 1–2 reps before form breaks."],
+["Push-up finisher",2,"Near failure","Chest","Clean reps; leave one good rep in reserve."]]},
+{id:2,name:"Pull",type:"Back / biceps",duration:"70–75 min",focus:"Lats · upper back · biceps · upper/lower traps",exercises:[
+["Pull-ups",4,"6–10","Lats","Start from a controlled hang; no swinging."],
+["Landmine row",4,"8–10","Lats","Strict back movement; drive elbows toward hips."],
+["Single-arm cable lat pulldown",3,"10–12 each","Lats","Reach overhead, then pull elbow down."],
+["Single-arm cable row",3,"8–12 each","Lats","Keep torso quiet; pause at the body."],
+["Cable rear-delt fly",3,"12–15","Traps","Sweep arms out; control shoulder blades."],
+["Dumbbell shrug",3,"10–12","Traps","Lift shoulders straight up; pause at top, no rolling."],
+["Incline Y raise",2,"12–15","Traps","Light weight; reach into a Y without arching. Lower-trap focus."],
+["Hammer curl",3,"10–12","Biceps","Neutral wrist; no body swing."],
+["Dumbbell/barbell curl",3,"10–12","Biceps","Keep elbows near sides."]]},
+{id:3,name:"Legs + Abs",type:"Lower body",duration:"65–75 min",focus:"Quads · hamstrings · glutes · calves · core · traps",exercises:[
+["Smith squat",4,"6–10","Quads","Brace and use a repeatable depth."],
+["Dumbbell Romanian deadlift",4,"8–10","Hamstrings","Hinge at hips; keep dumbbells close."],
+["Bulgarian split squat",3,"8–10 each","Quads","Stable stance; controlled descent."],
+["Dumbbell step-ups",3,"10 each","Glutes","Drive through working foot; avoid pushing off trailing leg."],
+["Standing calf raise",4,"12–15","Calves","Pause at stretch and top."],
+["Goblet squat",2,"15","Quads","Smooth reps; moderate load."],
+["Cable crunch",3,"15","Abs","Curl ribs toward pelvis; don't pull with arms."],
+["Hanging knee raise",3,"12","Abs","Control swing; tuck pelvis."],
+["Farmer carry",3,"30–40 sec","Traps","Heavy, tall posture; shoulders level. Upper traps and grip."]]},
+{id:4,name:"DB Circuit A",type:"Dumbbell circuit · 4 rounds",duration:"60–70 min",focus:"Full body · conditioning · mid traps",rounds:4,rest:100,exercises:[
+["Dumbbell thrusters",4,"10–12","Full body","Squat to press; keep ribs stacked."],
+["Bent-over dumbbell row",4,"12","Traps","Pause and squeeze shoulder blades for one second; no shrugging."],
+["Reverse lunges",4,"10 each","Quads","Step back under control."],
+["Dumbbell floor press",4,"12","Chest","Light pause on floor."],
+["Dumbbell Romanian deadlift",4,"12","Hamstrings","Hinge, don't squat."],
+["Dumbbell lateral raise",4,"12–15","Shoulders","Use a load you can control."],
+["Hammer curls",4,"12","Biceps","Keep elbows still."]]},
+{id:5,name:"Full Body A – Heavy",type:"Full body strength",duration:"70–75 min",focus:"Heavy compounds · upper-back balance · traps",exercises:[
+["Smith squat",4,"6–8","Quads","Brace and drive evenly."],
+["Smith bench press",4,"6–8","Chest","Controlled eccentric; stable setup."],
+["Pull-ups",4,"6–10","Lats","Leave 1–2 reps in reserve."],
+["Landmine row",3,"8–10","Lats","Strict back movement."],
+["Dumbbell Romanian deadlift",3,"8–10","Hamstrings","Maintain neutral spine."],
+["Cable lateral raise",3,"12–15","Shoulders","Avoid shrugging."],
+["Cable face pull",2,"15","Traps","Upper-back finish; pull toward forehead."],
+["Cable triceps pressdown",3,"10–12","Triceps","Keep elbows pinned."],
+["Dumbbell curl",3,"10–12","Biceps","No momentum."]]},
+{id:6,name:"Full Body B – Hypertrophy",type:"Full body volume",duration:"65–75 min",focus:"Hypertrophy · lats · rear delts · lower traps",exercises:[
+["Smith squat",3,"10–12","Quads","Smooth tempo; consistent depth."],
+["Incline dumbbell press",3,"10–12","Chest","Controlled stretch."],
+["Single-arm landmine row",3,"10 each","Lats","Back-focused pull; avoid torso rotation."],
+["Cable lat pulldown",3,"10–12","Lats","Drive elbows down."],
+["Cable rear-delt fly",3,"15","Traps","Control the return."],
+["Dumbbell lateral raise",3,"15","Shoulders","Light and strict."],
+["Incline Y raise",2,"12–15","Traps","Reach long; lower-trap focus."],
+["Hammer curl",3,"12","Biceps","Neutral grip."],
+["Overhead cable triceps extension",3,"12","Triceps","Keep elbows stable."]]},
+{id:7,name:"DB Circuit B",type:"Dumbbell circuit · 4 rounds",duration:"60–70 min",focus:"Full body · carries · core · traps",rounds:4,rest:100,exercises:[
+["Dumbbell push press",4,"10","Shoulders","Dip and drive; controlled lockout."],
+["Renegade rows",4,"8 each","Lats","Wide feet; resist hip rotation."],
+["Goblet squat",4,"12","Quads","Stay tall and brace."],
+["Walking lunges",4,"10 each","Quads","Controlled steps."],
+["Push-up rows",4,"8–10","Lats","Keep hips square."],
+["Farmer carry",4,"30–45 sec","Traps","Heavy, tall walk; upper traps and grip."],
+["Weighted sit-ups",4,"15","Abs","Use controlled range; stop if back discomfort."]]},
+{id:8,name:"Recovery",type:"Active recovery",duration:"30–40 min",focus:"Mobility · walking · recovery",exercises:[
+["Walk",1,"20–30 min","Recovery","Easy conversational pace."],
+["Hip mobility",1,"5 min","Recovery","Gentle controlled range."],
+["Shoulder mobility",1,"5 min","Recovery","Pain-free movement; no forcing."],
+["Stretching",1,"5 min","Recovery","Relaxed breathing; no bouncing."],
+["Hydration and sleep check",1,"2 min","Recovery","Plan hydration and protect sleep."]]},
+{id:9,name:"Military Calisthenics A",type:"Bodyweight / military-style",duration:"60–70 min",focus:"Pulling strength · push endurance · scapular control",exercises:[
+["Scapular pull-ups",3,"8–12","Traps","Small controlled shoulder-blade movement; keep elbows straight."],
+["Pull-ups",4,"Near technical max","Lats","Stop 1–2 reps before form fails."],
+["Push-ups",4,"15–25","Chest","Rigid body line; full range."],
+["Pike push-ups",3,"8–12","Shoulders","Head travels forward and down between hands."],
+["Bodyweight split squats",3,"12 each","Quads","Controlled depth."],
+["Glute bridges",3,"15","Glutes","Pause at top."],
+["Prone Y-T-W raises",2,"8 each shape","Traps","Small range, thumbs up; lower/mid-trap control."],
+["Prone reverse snow angels",3,"10–12","Traps","Move slowly through a pain-free range; keep shoulders away from ears."]]},
+{id:10,name:"Military Calisthenics B",type:"Bodyweight / military-style",duration:"60–70 min",focus:"Work capacity · posture · shoulder-blade control",exercises:[
+["Chin-ups",4,"6–10","Lats","Smooth reps; no kip."],
+["Hand-release push-ups",4,"12–20","Chest","Lift hands briefly; maintain plank."],
+["Walking lunges",3,"12 each","Quads","Steady cadence."],
+["Bear crawl",3,"20–30 sec","Full body","Opposite hand/foot; hips low."],
+["Scapular push-ups",3,"12–15","Traps","Move shoulder blades while elbows stay straight."],
+["Prone cobra hold",3,"20–30 sec","Traps","Lift chest gently; draw shoulders down and back."],
+["Mountain climbers",3,"30 sec","Full body","Drive knees without bouncing hips."],
+["Prone swimmer",3,"10 each","Traps","Use a small controlled range; keep neck relaxed."]]},
+{id:11,name:"DB Circuit C",type:"Dumbbell circuit · 4 rounds",duration:"60–70 min",focus:"Full body · rear delts · upper traps",rounds:4,rest:100,exercises:[
+["Dumbbell clean to press",4,"8","Full body","Clean to shoulders, then press smoothly."],
+["Chest-supported dumbbell row",4,"12","Traps","Pause with shoulder blades moving together."],
+["Goblet squat",4,"12","Quads","Brace and keep heels down."],
+["Dumbbell reverse fly",4,"15","Traps","Light weight; lead with elbows."],
+["Dumbbell Romanian deadlift",4,"12","Hamstrings","Hinge with soft knees."],
+["Farmer carry",4,"30–45 sec","Traps","Tall posture; no leaning."],
+["Alternating dumbbell curl",4,"10 each","Biceps","No swing."]]},
+{id:12,name:"Smith + Cable Full Body C",type:"Smith machine / cable",duration:"65–75 min",focus:"Full body · back thickness · traps · core",exercises:[
+["Smith incline bench press",3,"8–10","Chest","Set bench angle and shoulder position."],
+["Smith split squat",3,"10 each","Quads","Use a stable stance; control depth."],
+["Cable lat pulldown",3,"10–12","Lats","Drive elbows down."],
+["Seated cable row",3,"10–12","Traps","Pause with shoulder blades together; avoid leaning back."],
+["Cable face pull",3,"12–15","Traps","Pull to forehead; finish with controlled external rotation."],
+["Cable lateral raise",2,"15","Shoulders","Strict reps."],
+["Cable triceps pressdown",2,"12","Triceps","Elbows stay by sides."],
+["Cable curl",2,"12","Biceps","Smooth eccentric."],
+["Cable crunch",3,"12–15","Abs","Curl ribs down; don't yank rope."]]}
+];
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+function load(key,def){try{const v=localStorage.getItem(key);return v?JSON.parse(v):def}catch(e){return def}}
+function save(key,val){localStorage.setItem(key,JSON.stringify(val))}
+let sessions=load(KEYS.sessions,[]), measures=load(KEYS.measures,[]), settings=load(KEYS.settings,{goalWeight:""}), overrides=load(KEYS.overrides,{}), pending=load(KEYS.pending,[]);
+if(!Array.isArray(sessions))sessions=[];if(!Array.isArray(measures))measures=[];if(!Array.isArray(pending))pending=[];
+let currentTab="home",selectedWorkout=1,timerInt=null,timerLeft=0,chartLift="Smith bench press";
+function localDate(d=new Date()){const x=new Date(d);return x.getFullYear()+"-"+String(x.getMonth()+1).padStart(2,"0")+"-"+String(x.getDate()).padStart(2,"0")}
+function dateFromKey(k){return new Date(k+"T12:00:00")}
+function monday(k){const d=dateFromKey(k);d.setDate(d.getDate()-(d.getDay()+6)%7);return localDate(d)}
+function currentWeek(){const start=monday(localDate());const d=dateFromKey(start);return Array.from({length:7},(_,i)=>{let x=new Date(d);x.setDate(x.getDate()+i);return localDate(x)})}
+function weekSessions(){const days=currentWeek();return sessions.filter(s=>days.includes(s.date))}
+function fmt(n){return Math.round(n).toLocaleString("en-US")}
+function allExercises(){return PROGRAM.flatMap(w=>w.exercises.map(e=>({name:e[0],group:e[3],workout:w.name})))}
+function e1rm(weight,reps){if(!weight||!reps||reps>12)return null;return weight*(1+reps/30)}
+function totalVol(s){return (s.exercises||[]).reduce((a,e)=>a+(Number(e.weight)||0)*(Number(e.reps)||0)*(Number(e.sets)||0),0)}
+function sessionsForLift(name){return sessions.map(s=>({...s,entry:(s.exercises||[]).find(e=>e.name===name)})).filter(s=>s.entry)}
+function legacyStatus(){return LEGACY.map(k=>{let raw=localStorage.getItem(k);let count=0;if(raw){try{let p=JSON.parse(raw);count=Array.isArray(p)?p.length:(p&&typeof p==="object"?Object.keys(p).length:1)}catch(e){count=1}}return {key:k,exists:raw!==null,count}})}
+function legacyNotice(){const l=legacyStatus().filter(x=>x.exists);return l.length?`Legacy data detected and preserved: ${l.map(x=>x.key+" ("+x.count+")").join(", ")}. Older entries may not contain dates, so they are kept separate from V2 weekly analytics.`:"No legacy workout keys were found in this browser. If you used the previous app, open V2 on the same GitHub Pages address and import a backup if needed."}
+function setTab(tab){currentTab=tab;document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("active",b.dataset.tab===tab));render()}
+document.querySelectorAll("nav button").forEach(b=>b.addEventListener("click",()=>setTab(b.dataset.tab)));
+function stat(label,value,sub){return `<div class="card stat"><span>${label}</span><strong>${value}</strong><span>${sub||""}</span></div>`}
+function streakDays(){const days=[...new Set(sessions.map(s=>s.date))].sort().reverse();if(!days.length)return 0;let d=dateFromKey(days[0]),today=dateFromKey(localDate());if((today-d)/86400000>1)return 0;let n=0;for(let i=0;i<days.length;i++){let expected=new Date(d);expected.setDate(expected.getDate()-i);if(localDate(expected)===days[i])n++;else break}return n}
+function renderHome(){
+ const ws=weekSessions(),vol=ws.reduce((a,s)=>a+totalVol(s),0),streak=streakDays(),days=currentWeek();
+ const cal=days.map((d,i)=>{const done=ws.some(s=>s.date===d);return `<div class="day ${done?"done":""} ${d===localDate()?"today":""}"><b>${["M","T","W","T","F","S","S"][i]}</b><span>${d.slice(8)}</span><span>${done?"✓": "—"}</span></div>`}).join("");
+ const recent=[...sessions].sort((a,b)=>b.date.localeCompare(a.date)).slice(0,4);
+ const legacy=legacyNotice();
+ return `<h2>Dashboard</h2><p class="muted small">Your training at a glance. New V2 analytics use dated sessions only.</p>
+ <div class="grid">${stat("Workouts this week",ws.length,"Completed sessions")}${stat("Training streak",streak+" days","Consecutive training days")}${stat("Weekly volume",fmt(vol),"Logged load × reps × sets")}${stat("Total sessions",sessions.length,"Since V2 tracking began")}</div>
+ <section class="card"><div class="row"><h3>This week</h3><span class="pill green">${localDate()}</span></div><div class="calendar">${cal}</div><p class="tiny">A day is marked when a dated V2 session is completed. Rest days are fine—use the streak as a consistency indicator, not a score.</p></section>
+ <section class="card"><div class="row"><h3>Recent training</h3><button class="secondary" onclick="setTab('history')">View history</button></div>${recent.length?recent.map(s=>`<div class="listitem row"><div><b>${esc(s.workoutName)}</b><div class="tiny">${esc(s.date)} · ${(s.exercises||[]).length} exercises</div></div><b class="success">${fmt(totalVol(s))} lb</b></div>`).join(""):`<div class="empty">No V2 workouts logged yet. Start with Train.</div>`}</section>
+ <section class="card"><h3>Program status</h3><div class="row wrap"><span class="pill green">12-workout rotation</span><span class="pill">60–75 min training target</span><span class="pill">Integrated trap development</span></div><p class="small muted">Original 8-day structure is retained. Four options extend the rotation: two military calisthenics sessions, one additional dumbbell circuit, and one Smith/cable full-body session.</p></section>
+ <section class="card"><h3>Previous app data</h3><p class="small muted">${esc(legacy)}</p><button class="secondary" onclick="exportBackup()">Back up all app data</button></section>`;
+}
+function repLow(s){const m=String(s).match(/(\d+)/);return m?Number(m[1]):8}
+function repHigh(s){const m=String(s).match(/(?:\d+\s*[-–]\s*)(\d+)/);return m?Number(m[1]):repLow(s)}
+function renderTrain(){
+ const w=PROGRAM.find(x=>x.id===Number(selectedWorkout))||PROGRAM[0];
+ const opts=PROGRAM.map(x=>`<option value="${x.id}" ${x.id===w.id?"selected":""}>Day ${x.id} · ${esc(x.name)}</option>`).join("");
+ const circuit=w.rounds?`<span class="pill green">${w.rounds} rounds</span><span class="pill">Rest ${w.rest||100}s between rounds</span>`:"";
+ const cards=w.exercises.map((e,i)=>{
+  const ov=overrides[e[0]]||{};const sets=ov.sets??e[1];const reps=ov.reps??repLow(e[2]);const weight=ov.weight??"";
+  return `<div class="exercise"><div class="row start"><div><h4>${i+1}. ${esc(e[0])}</h4><div class="tags">${esc(e[3])} · ${sets} sets × ${esc(e[2])} · Rest ${e[5]||"60–120"} sec</div></div><span class="pill">${w.rounds?"Circuit":"Straight sets"}</span></div><p class="note">${esc(e[4])}</p><div class="formgrid"><div><label>Sets</label><input type="number" min="1" max="10" step="1" data-ex="${i}" data-field="sets" value="${sets}"></div><div><label>Reps / sec</label><input type="number" min="1" max="300" step="1" data-ex="${i}" data-field="reps" value="${reps}"></div><div><label>Load (lb)</label><input type="number" min="0" max="2000" step="0.5" data-ex="${i}" data-field="weight" value="${weight}" placeholder="0 / BW"></div></div></div>`;
+ }).join("");
+ return `<h2>Train</h2><p class="muted small">Choose a session, record working sets, then finish to save a dated workout.</p>
+ <section class="card"><label for="workoutSelect">Workout rotation</label><select id="workoutSelect" onchange="selectedWorkout=Number(this.value);render()">${opts}</select><div class="row wrap" style="margin-top:10px"><span class="pill green">Day ${w.id} of 12</span><span class="pill">${esc(w.duration)}</span><span class="pill">${esc(w.type)}</span></div><h3 style="margin-top:12px">${esc(w.name)}</h3><p class="small muted">${esc(w.focus)}</p>${circuit}<div class="notice">Time target: ${esc(w.duration)}. Use the listed rest periods and superset only compatible accessories if needed. Recovery day is intentionally shorter.</div></section>
+ <section class="card"><div class="row"><h3>Exercise log</h3><span class="tiny">Weight in lb</span></div>${cards}<div class="row wrap"><button onclick="finishWorkout(${w.id})">Finish & save workout</button><button class="secondary" onclick="resetWorkoutInputs()">Reset entries</button></div></section>
+ <section class="card"><h3>Rest timer</h3><div class="row"><div id="timerDisplay">01:30</div><div class="row"><button class="secondary" onclick="startTimer(60)">60s</button><button class="secondary" onclick="startTimer(90)">90s</button><button class="secondary" onclick="startTimer(120)">120s</button></div></div><p class="tiny">Timer runs while this page is open. Your workout log is saved separately.</p></section>`;
+}
+function finishWorkout(id){
+ const w=PROGRAM.find(x=>x.id===id);if(!w)return;
+ const exercises=w.exercises.map((e,i)=>{const get=f=>document.querySelector(`[data-ex="${i}"][data-field="${f}"]`)?.value;return {name:e[0],sets:Math.max(1,Number(get("sets"))||e[1]),reps:Math.max(1,Number(get("reps"))||repLow(e[2])),weight:Math.max(0,Number(get("weight"))||0),group:e[3],target:e[2]};});
+ const session={id:"ssv2-"+Date.now(),date:localDate(),createdAt:new Date().toISOString(),workoutId:id,workoutName:w.name,duration:w.duration,exercises};
+ sessions.push(session);save(KEYS.sessions,sessions);alert("Workout saved. Nice work.");setTab("home");
+}
+function resetWorkoutInputs(){document.querySelectorAll("#app input[data-ex]").forEach(i=>{if(i.dataset.field==="weight")i.value="";else if(i.dataset.field==="sets"){const w=PROGRAM.find(x=>x.id===selectedWorkout);i.value=w.exercises[Number(i.dataset.ex)][1]}else{const w=PROGRAM.find(x=>x.id===selectedWorkout);i.value=repLow(w.exercises[Number(i.dataset.ex)][2])}})}
+function startTimer(sec){clearInterval(timerInt);timerLeft=sec;updateTimer();timerInt=setInterval(()=>{timerLeft--;updateTimer();if(timerLeft<=0){clearInterval(timerInt);if(navigator.vibrate)navigator.vibrate([150,100,150]);}},1000)}
+function updateTimer(){const el=$("#timerDisplay");if(el)el.textContent=String(Math.floor(timerLeft/60)).padStart(2,"0")+":"+String(timerLeft%60).padStart(2,"0")}
+function bestForLift(name){const rows=sessionsForLift(name);let best=null;rows.forEach(s=>{const e=s.entry,est=e1rm(Number(e.weight),Number(e.reps));if(est&&(!best||est>best.est))best={est,weight:e.weight,reps:e.reps,date:s.date}});return best}
+const MAJOR=["Smith bench press","Smith squat","Pull-ups","Landmine row","Dumbbell Romanian deadlift","Cable lat pulldown"];
+function renderStrength(){
+ const lifts=[...new Set(MAJOR.concat(sessions.flatMap(s=>(s.exercises||[]).map(e=>e.name))))];
+ const opts=lifts.map(n=>`<option ${n===chartLift?"selected":""}>${esc(n)}</option>`).join("");
+ const prs=MAJOR.map(n=>{const b=bestForLift(n);return `<div class="listitem row"><div><b>${esc(n)}</b><div class="tiny">${b?`${b.weight} lb × ${b.reps} reps · ${b.date}`:"No dated entry yet"}</div></div><b class="success">${b?fmt(b.est)+" lb":"—"}</b></div>`}).join("");
+ return `<h2>Strength</h2><p class="muted small">Personal records and estimated one-rep max from your dated V2 logs.</p><section class="card"><h3>Major lift records</h3><p class="tiny">Estimated 1RM uses Epley: weight × (1 + reps ÷ 30), only for logged sets of 1–12 reps. Estimates are not tested maxes.</p>${prs}</section>
+ <section class="card"><label for="liftSelect">Progress chart</label><select id="liftSelect" onchange="chartLift=this.value;drawStrengthChart()">${opts}</select><div style="margin-top:10px"><canvas id="strengthChart" width="700" height="260"></canvas></div><p class="tiny">Chart uses estimated 1RM where calculable. Bodyweight-only pull-up entries without added load are not assigned an estimated max.</p></section>
+ <section class="card"><h3>Personal record detail</h3>${allExercises().filter((x,i,a)=>a.findIndex(y=>y.name===x.name)===i).map(x=>{const b=bestForLift(x.name);return b?`<span class="pill">${esc(x.name)}: ${fmt(b.est)} lb e1RM</span>`:""}).join("")||`<div class="empty">Log workouts to build your records.</div>`}</section>`;
+}
+function drawStrengthChart(){
+ const c=$("#strengthChart");if(!c)return;const ctx=c.getContext("2d"),dpr=window.devicePixelRatio||1,w=c.clientWidth||320,h=210;c.width=w*dpr;c.height=h*dpr;ctx.scale(dpr,dpr);ctx.clearRect(0,0,w,h);
+ const rows=sessionsForLift(chartLift).map(s=>({date:s.date,val:e1rm(Number(s.entry.weight),Number(s.entry.reps))})).filter(x=>x.val).sort((a,b)=>a.date.localeCompare(b.date));
+ ctx.fillStyle="#9eb0bc";ctx.font="11px sans-serif";if(!rows.length){ctx.fillText("Log 1–12 rep working sets to see your trend.",14,30);return}
+ const vals=rows.map(x=>x.val),min=Math.min(...vals)*.94,max=Math.max(...vals)*1.06,range=max-min||1,left=38,right=10,top=15,bottom=30;
+ ctx.strokeStyle="#2c3c49";ctx.lineWidth=1;for(let i=0;i<4;i++){let y=top+(h-top-bottom)*i/3;ctx.beginPath();ctx.moveTo(left,y);ctx.lineTo(w-right,y);ctx.stroke()}
+ ctx.fillStyle="#9eb0bc";ctx.fillText(fmt(max)+" lb",4,top+4);ctx.fillText(fmt(min)+" lb",4,h-bottom);
+ const pts=rows.map((r,i)=>({x:left+(rows.length===1?0:(w-left-right)*i/(rows.length-1)),y:top+(h-top-bottom)*(max-r.val)/range}));
+ ctx.strokeStyle="#b6f36b";ctx.lineWidth=2.5;ctx.beginPath();pts.forEach((p,i)=>i?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y));ctx.stroke();
+ pts.forEach((p,i)=>{ctx.fillStyle="#b6f36b";ctx.beginPath();ctx.arc(p.x,p.y,4,0,Math.PI*2);ctx.fill();if(i===0||i===pts.length-1){ctx.fillStyle="#dce8ee";ctx.fillText(rows[i].date.slice(5),Math.max(2,Math.min(w-48,p.x-18)),h-9)}})
+}
+function renderBody(){
+ const sorted=[...measures].sort((a,b)=>a.date.localeCompare(b.date)),latest=sorted.at(-1),goal=Number(settings.goalWeight)||0;
+ const last7=sorted.filter(x=>(dateFromKey(localDate())-dateFromKey(x.date))/86400000>=0&&(dateFromKey(localDate())-dateFromKey(x.date))/86400000<7);
+ const avg=last7.length?last7.reduce((a,x)=>a+Number(x.weight||0),0)/last7.length:null;
+ const change=sorted.length>1?Number(latest.weight)-Number(sorted[0].weight):null;
+ const pct=goal&&latest?Math.max(0,Math.min(100,100-Math.abs(goal-latest.weight)/Math.max(1,Math.abs((sorted[0]?.weight||latest.weight)-goal))*100)):0;
+ const byWeek={};sorted.forEach(x=>{const wk=monday(x.date);(byWeek[wk]||(byWeek[wk]=[])).push(Number(x.weight))});
+ const weeklyRows=Object.entries(byWeek).sort((a,b)=>b[0].localeCompare(a[0])).map(([wk,vals])=>`<div class="listitem row"><span class="small">Week of ${wk}</span><b>${(vals.reduce((a,v)=>a+v,0)/vals.length).toFixed(1)} lb <span class="tiny">(${vals.length} entries)</span></b></div>`).join("");
+ return `<h2>Body composition</h2><p class="muted small">Track bodyweight, waist and goal progress. Measurements stay on this device.</p>
+ <section class="card"><h3>Current progress</h3><div class="grid3">${stat("Latest weight",latest?latest.weight+" lb":"—",latest?.date||"Add a check-in")}${stat("7-day average",avg?avg.toFixed(1)+" lb":"—",last7.length+" entries")}${stat("Change",change===null?"—":(change>0?"+":"")+change.toFixed(1)+" lb","Since first entry")}</div>${goal&&latest?`<p class="small">Goal: <b>${goal} lb</b> · ${Math.abs(latest.weight-goal).toFixed(1)} lb ${latest.weight>goal?"to lose":"from goal"}</p><div class="progress"><i style="width:${pct}%"></i></div>`:""}</section>
+ <section class="card"><h3>Add measurement</h3><div class="formgrid"><div><label>Date</label><input id="measureDate" type="date" value="${localDate()}"></div><div><label>Weight (lb)</label><input id="measureWeight" type="number" step=".1" min="0" placeholder="e.g. 220"></div><div><label>Waist (in)</label><input id="measureWaist" type="number" step=".1" min="0" placeholder="optional"></div></div><button style="margin-top:10px" onclick="addMeasure()">Save measurement</button><div style="margin-top:15px"><label>Goal weight (lb)</label><div class="row"><input id="goalWeight" type="number" step=".1" value="${esc(settings.goalWeight||"")}" placeholder="Set goal"><button class="secondary" onclick="saveGoal()">Save goal</button></div></div></section>
+ <section class="card"><h3>Weight trend</h3><canvas id="bodyChart" width="700" height="260"></canvas><p class="tiny">Weekly averages are calculated from entries recorded in each calendar week. No missing days are invented.</p></section>
+ <section class="card"><h3>Calendar-week averages</h3>${weeklyRows||`<div class="empty">Add measurements to calculate weekly averages.</div>`}</section>\n <section class="card"><h3>Measurement history</h3>${sorted.length?sorted.slice().reverse().map(x=>`<div class="listitem row"><div><b>${esc(x.date)}</b><div class="tiny">Waist: ${x.waist?x.waist+" in":"not recorded"}</div></div><b>${x.weight} lb</b></div>`).join(""):`<div class="empty">No measurements yet.</div>`}</section>`;
+}
+function drawBodyChart(){const c=$("#bodyChart");if(!c)return;const ctx=c.getContext("2d"),dpr=devicePixelRatio||1,w=c.clientWidth||320,h=210;c.width=w*dpr;c.height=h*dpr;ctx.scale(dpr,dpr);ctx.clearRect(0,0,w,h);const rows=[...measures].filter(x=>Number(x.weight)>0).sort((a,b)=>a.date.localeCompare(b.date));ctx.fillStyle="#9eb0bc";ctx.font="11px sans-serif";if(!rows.length){ctx.fillText("Add bodyweight entries to see your trend.",14,30);return}const vals=rows.map(x=>Number(x.weight)),min=Math.min(...vals)-1,max=Math.max(...vals)+1,range=max-min||1,left=35,right=10,top=15,bottom=28;ctx.strokeStyle="#2c3c49";for(let i=0;i<4;i++){let y=top+(h-top-bottom)*i/3;ctx.beginPath();ctx.moveTo(left,y);ctx.lineTo(w-right,y);ctx.stroke()}ctx.fillStyle="#9eb0bc";ctx.fillText(max.toFixed(1),3,top+4);ctx.fillText(min.toFixed(1),3,h-bottom);const pts=rows.map((r,i)=>({x:left+(rows.length===1?0:(w-left-right)*i/(rows.length-1)),y:top+(h-top-bottom)*(max-r.weight)/range}));ctx.strokeStyle="#8bd4ff";ctx.lineWidth=2.5;ctx.beginPath();pts.forEach((p,i)=>i?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y));ctx.stroke();pts.forEach((p,i)=>{ctx.fillStyle="#8bd4ff";ctx.beginPath();ctx.arc(p.x,p.y,4,0,7);ctx.fill();if(i===0||i===pts.length-1){ctx.fillStyle="#dce8ee";ctx.fillText(rows[i].date.slice(5),Math.max(2,Math.min(w-48,p.x-18)),h-8)}})}
+function addMeasure(){const date=$("#measureDate").value||localDate(),weight=Number($("#measureWeight").value),waist=Number($("#measureWaist").value)||null;if(!weight){alert("Enter a bodyweight.");return}measures=measures.filter(x=>x.date!==date);measures.push({date,weight,waist});save(KEYS.measures,measures);render()}
+function saveGoal(){settings.goalWeight=$("#goalWeight").value;save(KEYS.settings,settings);render()}
+function analyze(){
+ const recs=[],seen=new Set();
+ for(const s of [...sessions].sort((a,b)=>a.date.localeCompare(b.date))){
+  for(const e of (s.exercises||[])){if(seen.has(e.name))continue;seen.add(e.name);const rows=sessionsForLift(e.name).sort((a,b)=>a.date.localeCompare(b.date));if(rows.length<2)continue;const last=rows.at(-1),prev=rows.at(-2),target=String(last.entry.target||"");const low=repLow(target),high=repHigh(target),weight=Number(last.entry.weight)||0,reps=Number(last.entry.reps)||0,sets=Number(last.entry.sets)||0;
+   if(weight>0&&reps>=high&&sets>=3){recs.push({id:"r"+Date.now()+Math.random(),exercise:e.name,kind:"load",sets,reps,weight:Math.round((weight+(e.group==="Quads"||e.group==="Hamstrings"?5:2.5))*2)/2,newWeight:Math.round((weight+(e.group==="Quads"||e.group==="Hamstrings"?5:2.5))*2)/2,reason:`You logged ${sets} sets of ${reps} reps at ${weight} lb, at or above the top of the target range. Try a small load increase next time if reps were clean.`});}
+   else if(rows.length>=3){const recent=rows.slice(-3).map(x=>e1rm(Number(x.entry.weight),Number(x.entry.reps))).filter(Boolean);if(recent.length===3&&Math.max(...recent)-Math.min(...recent)<Math.max(...recent)*.015){recs.push({id:"r"+Date.now()+Math.random(),exercise:e.name,kind:"plateau",sets:Math.max(1,sets-1),reps,weight,reason:"Estimated strength has been nearly flat across three logged exposures. Consider one easier week or one fewer hard set, then build again."})}}
+   if(weight>0&&reps<low&&Number(prev.entry.reps)<low){recs.push({id:"r"+Date.now()+Math.random(),exercise:e.name,kind:"reduce",sets,reps,weight:Math.max(0,Math.round(weight*.95*2)/2),newWeight:Math.max(0,Math.round(weight*.95*2)/2),reason:"Two recent exposures were below the target rep range. Reduce load slightly and rebuild clean reps."})}
+  }
+ }
+ const week=weekSessions(),setsBy={};week.forEach(s=>(s.exercises||[]).forEach(e=>setsBy[e.group]=(setsBy[e.group]||0)+Number(e.sets||0)));
+ const trapSets=(setsBy.Traps||0);if(week.length&&trapSets<4)recs.push({id:"r"+Date.now()+"trap",exercise:"Cable face pull",kind:"volume",sets:2,reps:15,weight:0,reason:"Your logged week shows relatively little direct trap work. Keep the planned trap work, and consider adding 2 controlled face-pull sets to the next pull or full-body session if recovery is good."});
+ return recs.slice(0,8);
+}
+function runAnalysis(){pending=analyze();save(KEYS.pending,pending);render()}
+function approveRec(id){const r=pending.find(x=>x.id===id);if(!r)return;const current=overrides[r.exercise]||{};if(r.kind==="load"||r.kind==="reduce"){overrides[r.exercise]={...current,weight:r.newWeight}}else if(r.kind==="plateau"){overrides[r.exercise]={...current,sets:r.sets}}else if(r.kind==="volume"){overrides[r.exercise]={...current,sets:r.sets,reps:r.reps}}save(KEYS.overrides,overrides);pending=pending.filter(x=>x.id!==id);save(KEYS.pending,pending);render();alert("Approved. The adjustment will prefill the next time this exercise appears.")}
+function answerCoach(){const q=$("#coachQuestion").value.trim().toLowerCase();if(!q)return;let ans="I’m the local rules-based coach, not a connected generative AI model. Log more sessions and run Analyze training so I can make evidence-based progression suggestions.";
+if(q.includes("bench")){const b=bestForLift("Smith bench press");ans=b?`Your best logged Smith bench estimate is ${fmt(b.est)} lb e1RM from ${b.weight} lb × ${b.reps}. Compare the last 3 exposures before increasing load. If you hit the top of the rep range across all work sets with clean form, try 2.5 lb next time.`:"I don't have a dated Smith bench entry yet. Log it in Push or Full Body A and I'll track the trend."}
+else if(q.includes("squat")){const b=bestForLift("Smith squat");ans=b?`Your best logged Smith squat estimate is ${fmt(b.est)} lb e1RM. Use consistent depth and compare 3 exposures. Increase by a small amount only when all work sets reach the top of the rep range.`:"No dated Smith squat entry yet. Log a working set to start your trend."}
+else if(q.includes("trap")){ans="Trap work is spread through the rotation: shrugs and Y raises on Pull, face pulls on Push/Full Body days, carries on Legs and DB Circuit B/C, plus scapular control in the calisthenics days. Track quality and recovery; avoid adding more if neck/shoulder fatigue is lingering."}
+else if(q.includes("plateau")||q.includes("stalled")){ans="A plateau needs repeated comparable exposures. Check sleep, technique, rest time and bodyweight trend. If 3 logged exposures show no improvement, take a lighter week or remove one hard set, then resume gradual progression. The coach's recommendations are suggestions, not automatic changes."}
+else if(q.includes("weight")||q.includes("fat")||q.includes("goal")){ans="Use consistent weigh-in conditions and compare 7-day averages, not single readings. Waist measurements help add context. This local coach does not diagnose or prescribe a diet; keep changes gradual and sustainable."}
+else if(q.includes("volume")){ans="Weekly volume in V2 is calculated from dated sessions only. Look at sets by primary muscle group and how you recover. Don't chase volume increases if performance or joint comfort is declining."}
+const box=$("#coachAnswer");box.innerHTML=`<div class="notice">${esc(ans)}</div>`;$("#coachQuestion").value=""}
+function weeklyGroupSummary(){
+ const groups={};weekSessions().forEach(s=>(s.exercises||[]).forEach(e=>{groups[e.group]=(groups[e.group]||0)+Number(e.sets||0)}));
+ const rows=Object.entries(groups).sort((a,b)=>b[1]-a[1]);
+ return rows.length?rows.map(([g,n])=>`<span class="pill">${esc(g)}: ${n} sets</span>`).join(""):`<span class="muted small">No dated sessions this week yet.</span>`;
+}
+function renderCoach(){
+ const cards=pending.length?pending.map(r=>`<div class="exercise"><div class="row"><b>${esc(r.exercise)}</b><span class="pill blue">${esc(r.kind)}</span></div><p class="note">${esc(r.reason)}</p>${r.newWeight!==undefined?`<div class="tiny">Suggested load: ${r.newWeight} lb</div>`:""}${r.sets?`<div class="tiny">Suggested sets: ${r.sets}${r.reps?" · reps "+r.reps:""}</div>`:""}<button style="margin-top:8px" onclick="approveRec('${r.id}')">Approve & apply</button> <button class="secondary" onclick="dismissRec('${r.id}')">Dismiss</button></div>`).join(""):`<div class="empty">No pending recommendations. Run an analysis after logging at least a couple of workouts.</div>`;
+ return `<h2>Adaptive Coach</h2><p class="muted small">Level 2: recommendations require your approval before changing your workout defaults.</p>
+ <section class="card"><div class="row"><h3>Coach status</h3><span class="pill green">Offline rules-based coach</span></div><div class="notice warn"><b>Live AI is not connected.</b> This version analyzes your locally stored training data with transparent progression rules. No workout or body data is sent to an AI provider. A live model needs a separately secured backend and setup; do not paste an API key into this page.</div><button onclick="runAnalysis()">Analyze training & make recommendations</button></section>
+ <section class="card"><h3>This week’s muscle-group sets</h3><p class="tiny">Primary-muscle set counts from dated V2 sessions; compound lifts still train secondary muscles.</p>${weeklyGroupSummary()}</section><section class="card"><h3>Pending recommendations</h3>${cards}</section>
+ <section class="card"><h3>Ask the coach</h3><p class="tiny">Local guidance based on your logs and built-in training rules. Not a medical professional or a substitute for a qualified coach.</p><textarea id="coachQuestion" rows="2" placeholder="Why has my bench stalled? Am I training traps enough?"></textarea><button style="margin-top:8px" onclick="answerCoach()">Ask</button><div id="coachAnswer"></div></section>
+ <section class="card"><h3>Exercise learning library</h3>${["Smith bench press|Chest, triceps, anterior delts|Set shoulder blades, lower under control, keep wrists stacked.","Pull-ups|Lats, biceps, upper back|Start from a controlled hang; avoid swinging; pull elbows down.","Landmine row|Lats and mid-back|Keep it strictly a back movement; brace and row toward hip.","Dumbbell shrug|Upper traps|Elevate shoulders vertically, pause, lower fully; don't roll shoulders.","Cable face pull|Mid/lower traps, rear delts, rotator cuff|Pull toward forehead and control the return.","Incline Y raise|Lower traps|Use very light resistance; reach long in a Y without arching.","Farmer carry|Upper traps, grip, trunk|Walk tall, ribs stacked, shoulders level.","Romanian deadlift|Hamstrings, glutes, spinal erectors|Hinge hips back, keep weights close, stop before back rounds."].map(x=>{let a=x.split("|");return `<details><summary>${esc(a[0])}</summary><p class="small muted"><b>Targets:</b> ${esc(a[1])}<br><b>Technique:</b> ${esc(a[2])}</p></details>`}).join("")}</section>
+ <section class="card"><h3>Live AI setup guide (optional)</h3><p class="small">The app is designed to work without a model. To add a live AI later, use a server-side proxy. Never store provider keys in index.html, localStorage, or a public GitHub repository.</p><ol class="small muted"><li>Create a Cloudflare Worker and enable Workers AI or connect a provider API from the server only.</li><li>Store provider credentials as Worker secrets, not source code.</li><li>Protect the endpoint with authentication/access controls and rate limits. A public endpoint with no protection can be abused.</li><li>Send only the minimum exercise-performance summary needed. Avoid sending bodyweight, waist, health details or other sensitive data to a free provider unless you understand its data terms.</li><li>Configure the app to call your own HTTPS Worker endpoint only after testing authentication, rate limiting, errors and data handling.</li></ol><p class="small">Current official references (limits and terms can change):<br><a href="https://developers.cloudflare.com/workers-ai/platform/pricing/" target="_blank" rel="noopener">Cloudflare Workers AI pricing</a><br><a href="https://ai.google.dev/gemini-api/docs/pricing" target="_blank" rel="noopener">Gemini API pricing and free-tier data terms</a><br><a href="https://developers.cloudflare.com/workers/configuration/secrets/" target="_blank" rel="noopener">Cloudflare Worker secrets</a></p><div class="notice warn">Google's free-tier Gemini API terms may allow submitted content to be used to improve Google products. Free quotas are not guaranteed permanent. Review current terms before enabling a provider.</div></section>`;
+}
+function dismissRec(id){pending=pending.filter(x=>x.id!==id);save(KEYS.pending,pending);render()}
+function renderHistory(){
+ const sorted=[...sessions].sort((a,b)=>b.createdAt.localeCompare(a.createdAt));
+ return `<h2>History & backup</h2><p class="muted small">V2 dated workout history and full-device backup tools.</p><section class="card"><h3>Backup before replacing the old app</h3><div class="notice warn">Export your backup from the currently deployed app before replacing index.html. This V2 export includes legacy Saude Strength keys found in this browser plus V2 records.</div><div class="row wrap"><button onclick="exportBackup()">Export backup JSON</button><label class="btn secondary" style="display:inline-block;cursor:pointer">Restore backup<input type="file" id="restoreFile" accept=".json,application/json" style="display:none" onchange="importBackup(event)"></label></div><p class="tiny">Restore merges keys from a Saude Strength backup after confirmation. Keep a second copy of the JSON file somewhere safe.</p></section>
+ <section class="card"><h3>Completed V2 workouts (${sessions.length})</h3>${sorted.length?sorted.map(s=>`<div class="listitem"><div class="row"><b>${esc(s.workoutName)}</b><span class="success">${fmt(totalVol(s))} lb</span></div><div class="tiny">${esc(s.date)} · ${s.exercises.length} logged exercises</div><div class="tiny">${s.exercises.map(e=>esc(e.name)+" "+e.sets+"×"+e.reps+(e.weight?" @ "+e.weight+" lb":"")).join(" · ")}</div></div>`).join(""):`<div class="empty">No workouts completed in V2 yet.</div>`}</section>
+ <section class="card"><h3>Legacy data check</h3>${legacyStatus().map(x=>`<div class="listitem row"><span class="small">${esc(x.key)}</span><b>${x.exists?"Found · "+x.count:"Not found"}</b></div>`).join("")}<p class="tiny">Legacy data is not deleted or rewritten. Undated legacy logs are not counted in V2 weekly totals or charts.</p></section>
+ <section class="card"><h3>Data stored on this iPhone/browser</h3><p class="small muted">Workout and body entries are saved in Safari localStorage. Clearing Safari website data, changing the website origin, or opening the app in a different browser can make this data unavailable. Use the same GitHub Pages address and export backups regularly.</p></section>`;
+}
+function exportBackup(){const storage={};for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k&&k.toLowerCase().includes("saudestrength"))storage[k]=localStorage.getItem(k)}const payload={app:"Saude Strength",version:2,exportedAt:new Date().toISOString(),storage};const blob=new Blob([JSON.stringify(payload,null,2)],{type:"application/json"});const url=URL.createObjectURL(blob);const a=document.createElement("a");a.href=url;a.download="saude-strength-backup-"+localDate()+".json";document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1500)}
+function importBackup(ev){const f=ev.target.files?.[0];if(!f)return;const reader=new FileReader();reader.onload=()=>{try{const data=JSON.parse(reader.result);if(!data.storage||typeof data.storage!=="object")throw new Error("Not a Saude Strength backup");if(!confirm("Restore this backup? Matching Saude Strength keys on this device will be replaced. Export a backup of the current app first."))return;Object.entries(data.storage).forEach(([k,v])=>{if(k.toLowerCase().includes("saudestrength"))localStorage.setItem(k,String(v))});sessions=load(KEYS.sessions,[]);measures=load(KEYS.measures,[]);settings=load(KEYS.settings,{});overrides=load(KEYS.overrides,{});pending=load(KEYS.pending,[]);alert("Backup restored.");setTab("home")}catch(e){alert("Could not restore backup: "+e.message)}finally{ev.target.value=""}};reader.readAsText(f)}
+function render(){const app=$("#app");if(currentTab==="home")app.innerHTML=renderHome();if(currentTab==="train")app.innerHTML=renderTrain();if(currentTab==="strength"){app.innerHTML=renderStrength();setTimeout(drawStrengthChart,30)}if(currentTab==="body"){app.innerHTML=renderBody();setTimeout(drawBodyChart,30)}if(currentTab==="coach")app.innerHTML=renderCoach();if(currentTab==="history")app.innerHTML=renderHistory()}
+window.addEventListener("resize",()=>{if(currentTab==="strength")drawStrengthChart();if(currentTab==="body")drawBodyChart()});
+render();
+</script>
+<footer>Saude Strength V2 · Local-first training tracker · Back up your data regularly</footer>
+</body>
+</html>
